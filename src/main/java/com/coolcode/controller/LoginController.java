@@ -29,5 +29,10 @@ public class LoginController {
         return "403";
     }
 
+    @RequestMapping("/404")
+    public String error404(){
+        return "404";
+    }
+
 
 }

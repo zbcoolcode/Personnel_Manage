@@ -20,7 +20,10 @@ public class MyErrorPage implements ErrorPageRegistrar {
     //定制错误跳转页面
     @Override
     public void registerErrorPages(ErrorPageRegistry registry) {
-        ErrorPage errorPage = new ErrorPage(HttpStatus.FORBIDDEN, "/403");
-        registry.addErrorPages(errorPage);
+        ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/403");
+        ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/404");
+        registry.addErrorPages(error403Page,error404Page);
     }
+
+
 }

@@ -23,30 +23,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    private AdminDao adminDao;
-
-    @Autowired
-    private DataSource dataSource;
-
-
-
     //链式编程
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers( "/userlogin").permitAll()
-
-                .antMatchers("/admin/admins").hasAnyAuthority("admin","super")
-                .antMatchers("/admin/**").hasAnyAuthority("super")
-                .antMatchers("/emp/emps").hasAnyAuthority("admin","super")
-                .antMatchers("/emp/**").hasAnyAuthority("super")
-                .antMatchers("/dep/deps").hasAnyAuthority("admin","super")
-                .antMatchers("/dep/**").hasAnyAuthority("super")
+                .antMatchers("/userlogin").permitAll()
+                .antMatchers("/admin/addpage").hasAnyAuthority( "super")
+                .antMatchers("/**/addpage").hasAnyAuthority("admin", "super")
+                .antMatchers("/**/add").hasAnyAuthority("admin", "super")
+                .antMatchers("/admin/admins").hasAnyAuthority("admin", "super")
+                .antMatchers("/emp/empsbycondition").hasAnyAuthority("admin", "super")
+                .antMatchers("/emp/emps").hasAnyAuthority("admin", "super")
+                .antMatchers("/dep/deps").hasAnyAuthority("admin", "super")
                 .antMatchers("/job/jobs").hasAnyAuthority("admin","super")
-                .antMatchers("/job/**").hasAnyAuthority("super");
-
+                .antMatchers("/admin/admin").hasAnyAuthority("super")
+                .antMatchers("/emp/emp").hasAnyAuthority( "super")
+                .antMatchers("/dep/dep").hasAnyAuthority("super")
+                .antMatchers("/job/job").hasAnyAuthority( "super")
+                .antMatchers("/**/update").hasAnyAuthority("super")
+                .antMatchers("/**/delete").hasAnyAuthority("super");
         http.formLogin().usernameParameter("user").passwordParameter("pwd")
                 .loginPage("/userlogin")
                 .successForwardUrl("/admin/admins");
@@ -54,36 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();      //禁止使用跨站访问
 
-
-
-
-//        //设置首页所有人可以访问，功能页面需要身份验证
-//        http.authorizeRequests()
-//                .antMatchers("/").permitAll()
-//                .antMatchers("/emp/**").hasRole("admin")
-//                .antMatchers("/emp/update").hasRole("superadmin")
-//                .antMatchers("/dep/**").hasRole("admin")
-//                .antMatchers("/dep/update").hasRole("superadmin")
-//                .antMatchers("/job/**").hasRole("admin")
-//                .antMatchers("/job/update").hasRole("superadmin");
-//
-//        http.formLogin().loginPage("/login").loginProcessingUrl("/admin/admins"); //访问没有权限页面要身份验证页面
-//
-//        http.csrf().disable();
-//        http.rememberMe().rememberMeParameter("remember");
-//        http.logout().logoutSuccessUrl("/");
     }
-
-    //身份验证
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-////        auth.jdbcAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-////            .withUser("bzini").password(new BCryptPasswordEncoder().encode("bzini1")).roles("admin")
-////            .and()
-////            .withUser("ler").password(new BCryptPasswordEncoder().encode("ler1")).roles("vip1","vip2")
-////            .and()
-////            .withUser("root").password(new BCryptPasswordEncoder().encode("root1")).roles("vip1","vip2","vip3");
-////        auth.jdbcAuthentication().dataSource(dataSource)
-////                .withUser(adminDao.getAdminById());
-//    }
 }
+
+

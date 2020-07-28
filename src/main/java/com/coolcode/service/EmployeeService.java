@@ -53,5 +53,10 @@ public class EmployeeService {
 		List<Employee> emps = employeeDao.getEmpsByCondition(employee);
 		return emps;
 	}
+
+	public List<Employee> getEmpsByJobId(Integer jobid) {
+		List<Employee> emps=employeeDao.getEmpsByJobId(jobid);
+		return emps;
+	}
 }
 

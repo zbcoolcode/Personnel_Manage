@@ -94,4 +94,20 @@ public interface EmployeeDao {
 	//提供职位ID删除员工
 	@Delete("delete from employees where job_id=#{jobid}")
 	void deleteEmpsByJobId(Integer jobid);
+
+	//通过部门ID查询该部门的所有员工
+	@Select("select *from employees where job_id=#{jobid}")
+	@Results({
+			@Result(id=true,property = "empid",column = "employee_id"),
+			@Result(property = "empname",column = "name"),
+			@Result(property = "gender",column = "gender"),
+			@Result(property = "hiredate",column = "hiredate"),
+			@Result(property = "address",column = "address"),
+			@Result(property = "phone",column = "phone"),
+			@Result(property = "salary",column = "salary"),
+			@Result(property = "password",column = "password"),
+			@Result(property = "department",column = "department_id",javaType = Department.class,one = @One(select = "com.coolcode.dao.DepartmentDao.getDepById")),
+			@Result(property = "job",column = "job_id",javaType = Job.class,one = @One(select = "com.coolcode.dao.JobDao.getJobById")),
+	})
+	List<Employee> getEmpsByJobId(Integer jobid);
 }
