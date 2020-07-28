@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Dashboard Template for Bootstrap</title>
+		<!-- Bootstrap core CSS -->
+		<link href="asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}"  rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+			
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			.chartjs-render-monitor {
+				-webkit-animation: chartjs-render-animation 0.001s;
+				animation: chartjs-render-animation 0.001s;
+			}
+		</style>
+	</head>
+
+	<body>
+	<div th:replace="commons/bar::top"></div>
+		<div class="container-fluid">
+			<div class="row">
+				<div th:replace="commons/bar::side_lefe"></div>
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<div style="margin: 10px;font-size: 15px" class="text-primary">部门管理&nbsp;/&nbsp;部门列表</div>
+					<h2 align="right"><a class="btn btn-sm btn-success"   th:href="@{/dep/addpage}">部门添加</a></h2>
+
+
+					<div class="table-responsive">
+						<table class="table table-striped table-sm">
+							<thead>
+								<tr>
+									<th>部门ID</th>
+									<th>部门名称</th>
+									<th>部门经理</th>
+									<th>部门地址</th>
+									<th>部门人数</th>
+									<th colspan="2" style="text-align: center">基本操作</th>
+								</tr>
+							</thead>
+							<tbody >
+							<tr th:each="dep:${deppageInfo.list}">
+								<td th:text="${dep.depid}"></td>
+								<td th:text="${dep.depname}"></td>
+								<td th:text="${dep.depmanager}"></td>
+								<td th:text="${dep.depaddress}"></td>
+								<td th:text="${dep.depcount}"></td>
+								<td><a th:href="@{/dep/dep(depid=${dep.depid})}">修改</a></td>
+								<td><a class="delbtn" th:href="@{/dep/delete(depid=${dep.depid})}"><abbr title="删除该部门将删除该部门所有员工">删除（包括员工）</abbr></a></td>
+							</tr>
+							<tr>
+								<td colspan="4" align="center">
+									<a th:href="@{/dep/deps}">首页</a>&nbsp;
+									<a th:href="@{/dep/deps(pn=${deppageInfo.prePage})}">上一页</a> &nbsp;
+									<a th:href="@{/dep/deps(pn=${deppageInfo.nextPage})}">下一页</a>&nbsp;
+									<a th:href="@{/dep/deps(pn=${deppageInfo.pages})}">末页</a>&nbsp;</td>
+								<td colspan="1">总页数:&nbsp;[[${deppageInfo.pages}]]</td>
+								<td colspan="1">员工总数：&nbsp;[[${deppageInfo.total}]]</td>
+								<td colspan="3" align="center">
+									<form th:action="@{/dep/deps}">
+										页码查找:&nbsp;<input type="text" name="pn"> <input
+											type="submit" value="查找">
+									</form>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</main>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" th:src="@{/asserts/js/jquery-3.2.1.slim.min.js}"></script>
+		<script type="text/javascript" th:src="@{/asserts/js/popper.min.js}"></script>
+		<script type="text/javascript" th:src="@{/asserts/js/bootstrap.min.js}"></script>
+
+		<!-- Icons -->
+		<script type="text/javascript" src="/asserts/js/feather.min.js"></script>
+		<script>
+			feather.replace()
+		</script>
+
+		<!-- Graphs -->
+		<script type="text/javascript" src="asserts/js/Chart.min.js"></script>
+		<script>
+			var ctx = document.getElementById("myChart");
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+					datasets: [{
+						data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+						lineTension: 0,
+						backgroundColor: 'transparent',
+						borderColor: '#007bff',
+						borderWidth: 4,
+						pointBackgroundColor: '#007bff'
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: false
+							}
+						}]
+					},
+					legend: {
+						display: false,
+					}
+				}
+			});
+		</script>
+
+	</body>
+
+</html>

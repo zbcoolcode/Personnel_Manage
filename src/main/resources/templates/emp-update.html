@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>employees</title>
+    <meta charset="utf-8">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}"  rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+    <script type="text/javascript">
+    </script>
+
+</head>
+<body>
+<div th:replace="commons/bar::top"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="commons/bar::side_lefe"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div style="margin: 10px;font-size: 15px" class="text-primary">员工管理&nbsp;/&nbsp;更新员工数据</div>
+
+            <form th:action="@{/emp/update}" method="post">
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">工号:</label>
+                    <input style="color: gray" class="form-control" type="text" name="empid" th:value="${emp.empid}" readonly="readonly">
+                </div>
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">姓名:</label>
+                    <input style="color: gray" class="form-control" type="text" name="empname" th:value="${emp.empname}" readonly="readonly">
+                </div>
+
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">性别:</label>
+                    <input style="color: gray" class="form-control" type="text" name="gender" th:value="${emp.gender}" readonly="readonly">
+                </div>
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">入职：</label>
+                    <input style="color: gray" class="form-control" type="date" name="hiredate"
+                           th:value="${emp.hiredate}" readonly="readonly">
+                </div>
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">部门：</label>
+                    <select class="form-control" name="department.depid">
+                        <option th:selected="${dept.depid eq emp.department.depid}" th:value="${dept.depid}" th:each="dept:${deps}" th:text="${dept.depname}">1</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">职位：</label>
+                    <select class="form-control" name="job.jobid">
+                        <option th:selected="${job.jobid eq emp.job.jobid}" th:value="${job.jobid}" th:each="job:${jobs}" th:text="${job.jobname}">1</option>
+                    </select>
+                </div>
+
+
+
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">住址：</label>
+                    <input  class="form-control" type="text" name="address" th:value="${emp.address}">
+                </div>
+
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">生日：</label>
+                    <input  class="form-control" type="date" name="birthdate"
+                           th:value="${emp.birthdate}">
+                </div>
+
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">手机：</label>
+                    <input  class="form-control" type="text" name="phone" th:value="${emp.phone}">
+                </div>
+
+
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">薪水：</label>
+                    <input class="form-control" type="text" name="salary" th:value="${emp.salary}">
+                </div>
+
+                <div class="form-group col-md-3 form-check-inline">
+                    <label style="margin: 10px">密码：</label>
+                    <input  class="form-control" type="text" name="password"
+                           th:value="${emp.password}">
+                </div>
+                <br/>
+                <div class="form-group col-md-3 form-check-inline">
+                    <input style="margin: 10px" class="form-control btn-success" type="submit" value="提交修改">
+                </div>
+            </form>
+
+            <br/>
+    </div>
+    <a href="${pageContext.request.contextPath }/getEmps">返回</a>
+</div>
+</div>
+</div>
+</body>
+</html>
